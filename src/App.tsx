@@ -1,55 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import "./App.css";
 
 function App() {
   const [choice, setChoice] = React.useState("");
-  const [computerChoice, setComputerChoice] = React.useState("");
   const [result, setResult] = React.useState("");
 
-  const computerAnswer = () => {
-    const randomNumber = Math.floor(Math.random() * 3) + 1;
-    if (randomNumber === 1) {
-      setComputerChoice("rock");
-    }
-    if (randomNumber === 2) {
-      setComputerChoice("scissors");
-    }
-    if (randomNumber === 3) {
-      setComputerChoice("paper");
+  const ResultReducer = (_computerChoice: any, action: any) => {
+    switch (action.type) {
+      case 1:
+        return "rock";
+      case 2:
+        return "paper";
+      case 3:
+        return "scissors";
+      default:
+        break;
     }
   };
+  const initialState: any = "";
+  const [computerChoice, dispatch] = useReducer(ResultReducer, initialState);
+
 
   const handleClick = (e: any) => {
+    dispatch({ type: Math.floor(Math.random() * 3) + 1 });
     setChoice(e.target.id);
-    computerAnswer();
-    getResult();
+    console.log(result);
     console.log(e.target.id);
   };
-
-
-  const getResult=()=> {
-    if (computerChoice === choice) {
-      setResult("its a draw!");
-    }
-    if (computerChoice === "rock" && choice === "paper") {
-      setResult("you win!");
-    }
-    if (computerChoice === "rock" && choice === "scissors") {
-      setResult("you lost!");
-    }
-    if (computerChoice === "paper" && choice === "scissors") {
-      setResult("you win!");
-    }
-    if (computerChoice === "paper" && choice === "rock") {
-      setResult("you lose!");
-    }
-    if (computerChoice === "scissors" && choice === "rock") {
-      setResult("you win!");
-    }
-    if (computerChoice === "scissors" && choice === "paper") {
-      setResult("you lose!");
-    }
-  }
 
   return (
     <div className="App">
@@ -65,7 +42,7 @@ function App() {
       <button id="scissors" onClick={handleClick}>
         Scissors
       </button>
-      <h1>{result}</h1>
+      {/* <h1>{result}</h1> */}
     </div>
   );
 }

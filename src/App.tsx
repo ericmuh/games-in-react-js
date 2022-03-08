@@ -14,17 +14,42 @@ function App() {
       case 3:
         return "scissors";
       default:
-        break;
+        return "";
+
+    }
+  };
+
+
+  const checkResults = () => {
+    if (computerChoice === choice) {
+      setResult("its a draw!");
+    }
+    if (computerChoice === "rock" && choice === "paper") {
+      setResult("you win!");
+    }
+    if (computerChoice === "rock" && choice === "scissors") {
+      setResult("you lost!");
+    }
+    if (computerChoice === "paper" && choice === "scissors") {
+      setResult("you win!");
+    }
+    if (computerChoice === "paper" && choice === "rock") {
+      setResult("you lose!");
+    }
+    if (computerChoice === "scissors" && choice === "rock") {
+      setResult("you win!");
+    }
+    if (computerChoice === "scissors" && choice === "paper") {
+      setResult("you lose!");
     }
   };
   const initialState: any = "";
   const [computerChoice, dispatch] = useReducer(ResultReducer, initialState);
 
-
   const handleClick = (e: any) => {
     dispatch({ type: Math.floor(Math.random() * 3) + 1 });
     setChoice(e.target.id);
-    console.log(result);
+    checkResults()
     console.log(e.target.id);
   };
 
@@ -42,7 +67,7 @@ function App() {
       <button id="scissors" onClick={handleClick}>
         Scissors
       </button>
-      {/* <h1>{result}</h1> */}
+      <h1>{result} : {computerChoice}:{choice}</h1>
     </div>
   );
 }

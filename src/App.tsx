@@ -1,17 +1,18 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import { cardArray } from "./variables";
 import blank from "./images/blank.png";
 import white from "./images/white.png";
 
 function App() {
+  const [resultDisplay, setresultDisplay] = useState<any>("");
   cardArray.sort(() => 0.5 - Math.random());
-  let cardsChosen:any[]  = [];
-  let cardsChosenId:any[] = [];
+  let cardsChosen: any[] = [];
+  let cardsChosenId: any[] = [];
   let cardsWon = [];
 
   //check for matches
-  function checkForMatch() {
+  const checkForMatch = () => {
     const cards = document.querySelectorAll("img");
     const optionOneId = cardsChosenId[0];
     const optionTwoId = cardsChosenId[1];
@@ -34,19 +35,19 @@ function App() {
     }
     cardsChosen = [];
     cardsChosenId = [];
-    // resultDisplay.textContent = cardsWon.length;
+    setresultDisplay(cardsWon.length);
     if (cardsWon.length === cardArray.length / 2) {
-      // resultDisplay.textContent = "Congratulations! You found them all!";
+      setresultDisplay("Congratulations! You found them all!");
     }
-  }
+  };
 
   function flipCard(e: any) {
     let cardId = e.target.getAttribute("data-id");
     cardsChosen.push(cardArray[cardId].name);
     cardsChosenId.push(cardId);
     e.target.setAttribute("src", cardArray[cardId].img);
-    if (cardsChosen.length ===2) {
-      setTimeout(checkForMatch, 500)
+    if (cardsChosen.length === 2) {
+      setTimeout(checkForMatch, 500);
     }
   }
   const handleClick = (e: any) => {
@@ -64,6 +65,7 @@ function App() {
             onClick={handleClick}
           />
         ))}
+        {resultDisplay}
       </div>
     </div>
   );

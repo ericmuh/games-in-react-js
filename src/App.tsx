@@ -5,11 +5,11 @@ import blank from "./images/blank.png";
 import white from "./images/white.png";
 
 function App() {
-  const [resultDisplay, setresultDisplay] = useState<any>("");
   cardArray.sort(() => 0.5 - Math.random());
   let cardsChosen: any[] = [];
   let cardsChosenId: any[] = [];
   let cardsWon = [];
+  let resultDisplay: any = "";
 
   //check for matches
   const checkForMatch = () => {
@@ -35,9 +35,9 @@ function App() {
     }
     cardsChosen = [];
     cardsChosenId = [];
-    setresultDisplay(cardsWon.length);
+    resultDisplay = cardsWon.length;
     if (cardsWon.length === cardArray.length / 2) {
-      setresultDisplay("Congratulations! You found them all!");
+      resultDisplay = "Congratulations! You found them all!";
     }
   };
 
@@ -50,9 +50,7 @@ function App() {
       setTimeout(checkForMatch, 500);
     }
   }
-  const handleClick = (e: any) => {
-    flipCard(e);
-  };
+
   return (
     <div className="App">
       <div className="grid">
@@ -62,7 +60,7 @@ function App() {
             src={blank}
             alt={card.name}
             data-id={key}
-            onClick={handleClick}
+            onClick={flipCard}
           />
         ))}
         {resultDisplay}
